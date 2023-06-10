@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 02 Juin 2023 à 16:56
+-- Généré le :  Ven 02 Juin 2023 à 18:09
 -- Version du serveur :  5.6.20
 -- Version de PHP :  5.5.15
 
@@ -23,12 +23,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Adminisatrtion`
+-- Structure de la table `Administration`
 --
 
-CREATE TABLE IF NOT EXISTS `Adminisatrtion` (
-  `login` varchar(30) NOT NULL,
-  `MDP` varchar(30) NOT NULL
+CREATE TABLE IF NOT EXISTS `Administration` (
+  `Login` int(30) NOT NULL,
+  `MDP` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -44,6 +44,13 @@ CREATE TABLE IF NOT EXISTS `Batiment` (
   `MDP` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `Batiment`
+--
+
+INSERT INTO `Batiment` (`CodeBat`, `Nom`, `Login`, `MDP`) VALUES
+(0, 'GIM', 'test', 'test');
+
 -- --------------------------------------------------------
 
 --
@@ -57,6 +64,13 @@ CREATE TABLE IF NOT EXISTS `Capteur` (
   `CodeBat` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `Capteur`
+--
+
+INSERT INTO `Capteur` (`CodeCapt`, `Nom`, `Type`, `CodeBat`) VALUES
+(1, 'TEst', 'Temp', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -64,12 +78,23 @@ CREATE TABLE IF NOT EXISTS `Capteur` (
 --
 
 CREATE TABLE IF NOT EXISTS `Mesure` (
-  `CodeMes` int(30) NOT NULL,
-  `Date` date NOT NULL,
-  `Horaire` time(6) NOT NULL,
+`CodeMes` int(30) NOT NULL,
+  `Date` date DEFAULT NULL,
+  `Horaire` time(6) DEFAULT NULL,
   `Valeur` float NOT NULL,
   `CodeCapt` int(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Contenu de la table `Mesure`
+--
+
+INSERT INTO `Mesure` (`CodeMes`, `Date`, `Horaire`, `Valeur`, `CodeCapt`) VALUES
+(1, '0000-00-00', '00:00:00.000000', 24, 1),
+(2, '0000-00-00', '00:00:00.000000', 21, 1),
+(3, NULL, NULL, 23, 1),
+(4, NULL, NULL, 56, 1),
+(5, NULL, NULL, 24, 1);
 
 --
 -- Index pour les tables exportées
@@ -93,6 +118,15 @@ ALTER TABLE `Capteur`
 ALTER TABLE `Mesure`
  ADD PRIMARY KEY (`CodeMes`), ADD KEY `clef_CodeCapt` (`CodeCapt`);
 
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `Mesure`
+--
+ALTER TABLE `Mesure`
+MODIFY `CodeMes` int(30) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- Contraintes pour les tables exportées
 --
