@@ -6,7 +6,7 @@
     <select name="code_batiment">
         <?php
         // Connexion à la base de données
-        $db = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23") or die('Connexion impossible');
+        $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
         // Récupérer tous les bâtiments
         $query_batiments = "SELECT * FROM Batiment";
