@@ -19,7 +19,8 @@
         echo $code;
         echo $room;
 	echo $bat;
-   
+	
+   	//queries and sending filtered data to the database
         $requetebat="INSERT INTO `Batiment` (`CodeBat`, `Nom`, `Login`, `MDP`) VALUES ('1','$bat','$valeurLogin','$valeurMDP')";
 	$requetecapt="INSERT INTO `Capteur` (`CodeCapt`, `Nom`, `Type`, `CodeBat`) VALUES ('$code','$room','Temperature','$CodeBat')";
 	$requetevaleur="INSERT INTO `Mesure` (`Valeur`, `CodeCapt`) VALUES ('$valeur','$code')";
