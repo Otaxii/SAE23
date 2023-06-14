@@ -1,6 +1,6 @@
 #!/opt/lampp/bin/php
 <?php
-	while (true)
+	while (true) //infinite loop
 {
    	shell_exec('mosquitto_sub -h mqtt.iut-blagnac.fr -t Student/by-room/B203/data -C 1 | jq ".[0].temperature, .[1].deviceName, .[1].devEUI, .[1].room, .[1].Building" > /home/ndupont/Desktop/stockage_donnees/B203.txt');
     $id_bd=mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
