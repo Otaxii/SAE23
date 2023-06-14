@@ -27,7 +27,7 @@
         <tbody>
             <?php
             // Connexion à la base de données
-            $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
+            $db = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23") or die('Connexion impossible');
 
             // Récupérer la dernière valeur de chaque salle pour le bâtiment R&T
             $query_dernieres_valeurs_rt = "SELECT Mesure.Valeur, Capteur.Salle FROM Mesure JOIN Capteur ON Mesure.CodeCapt = Capteur.CodeCapt WHERE Capteur.CodeBat = 1 AND Mesure.CodeMes IN (SELECT MAX(CodeMes) FROM Mesure WHERE CodeCapt IN (SELECT CodeCapt FROM Capteur WHERE CodeBat = 1) GROUP BY CodeCapt)";
@@ -56,7 +56,7 @@
         <tbody>
             <?php
             // Récupérer la dernière valeur de chaque salle pour le bâtiment GIM
-            $query_dernieres_valeurs_gim = "SELECT Mesure.Valeur, Capteur.Salle FROM Mesure JOIN Capteur ON Mesure.CodeCapt = Capteur.CodeCapt WHERE Capteur.CodeBat = 0 AND Mesure.CodeMes IN (SELECT MAX(CodeMes) FROM Mesure WHERE CodeCapt IN (SELECT CodeCapt FROM Capteur WHERE CodeBat = 0) GROUP BY CodeCapt)";
+            $query_dernieres_valeurs_gim = "SELECT Mesure.Valeur, Capteur.Salle FROM Mesure JOIN Capteur ON Mesure.CodeCapt = Capteur.CodeCapt WHERE Capteur.CodeBat = 0 AND Mesure.CodeMes IN (SELECT MAX(CodeMes) FROM Mesure WHERE CodeCapt IN (SELECT CodeCapt FROM Capteur WHERE CodeBat = 2) GROUP BY CodeCapt)";
             $result_dernieres_valeurs_gim = mysqli_query($db, $query_dernieres_valeurs_gim);
 
             // Afficher la dernière valeur de chaque salle pour le bâtiment GIM
