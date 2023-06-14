@@ -7,7 +7,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Connexion à la base de données
-    $conn = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23");
+    $conn = mysqli_connect("localhost", "DUPONT", "22209481", "sae23");
 
     // Vérification de la connexion à la base de données
     if (!$conn) {

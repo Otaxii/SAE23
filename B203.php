@@ -1,13 +1,18 @@
 #!/opt/lampp/bin/php
 <?php
-   	shell_exec('mosquitto_sub -h mqtt.iut-blagnac.fr -t Student/by-room/B203/data -C 1 | jq ".[0].temperature, .[1].deviceName, .[1].devEUI, .[1].room, .[1].Building" > /home/sae23miceli/Desktop/stockage_donnees/B203.txt');
-    //$id_bd=mysqli_connect("localhost", "miceli", "22211833", "sae23") or die('Connexion impossible');
+	while (true)
+{
+   	shell_exec('mosquitto_sub -h mqtt.iut-blagnac.fr -t Student/by-room/B203/data -C 1 | jq ".[0].temperature, .[1].deviceName, .[1].devEUI, .[1].room, .[1].Building" > /home/ndupont/Desktop/stockage_donnees/B203.txt');
+    $id_bd=mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 	
-	$bat=shell_exec('more /home/sae23miceli/Desktop/stockage_donnees/B203.txt | sed -n 5p | tr -d \'"\'');
-	$room=shell_exec('more /home/sae23miceli/Desktop/stockage_donnees/B203.txt | sed -n 4p | tr -d \'"\'');
-	$code=shell_exec('more /home/sae23miceli/Desktop/stockage_donnees/B203.txt | sed -n 3p | tr -d \'"\'');
-	$nom=shell_exec('more /home/sae23miceli/Desktop/stockage_donnees/B203.txt | sed -n 2p | tr -d \'"\'');
-    $valeur=shell_exec('more /home/sae23miceli/Desktop/stockage_donnees/B203.txt | sed -n 1p');
+	$bat=shell_exec('more /home/ndupont/Desktop/stockage_donnees/B203.txt | sed -n 5p | tr -d \'"\'');
+	$room=shell_exec('more /home/ndupont/Desktop/stockage_donnees/B203.txt | sed -n 4p | tr -d \'"\'');
+	$code=shell_exec('more /home/ndupont/Desktop/stockage_donnees/B203.txt | sed -n 3p | tr -d \'"\'');
+	$nom=shell_exec('more /home/ndupont/Desktop/stockage_donnees/B203.txt | sed -n 2p | tr -d \'"\'');
+    $valeur=shell_exec('more /home/ndupont/Desktop/stockage_donnees/B203.txt | sed -n 1p');
+	$valeurMDP="passgim";
+	$valeurLogin="batgim";
+	$CodeBat="2";
     
     echo $valeur;
     echo $nom;
@@ -15,6 +20,12 @@
     echo $room;
 	echo $bat;
    
-    //$requete="INSERT INTO `Mesure` (`Valeur`, `CodeCapt`) VALUES ($temp,1)";
-    //mysqli_query($id_bd,$requete) or die ("Ajout échoué $requete");
+	$requetebat="INSERT INTO `Batiment` (`CodeBat`, `Nom`, `Login`, `MDP`) VALUES ('2','$bat','$valeurLogin','$valeurMDP')";
+	$requetecapt="INSERT INTO `Capteur` (`CodeCapt`, `Nom`, `Type`, `CodeBat`) VALUES ('$code','$room','Temperature','$CodeBat')";
+	$requetevaleur="INSERT INTO `Mesure` (`Valeur`, `CodeCapt`) VALUES ('$valeur','$code')";
+	if (mysqli_query($id_bd,$requetebat)){}
+	if (mysqli_query($id_bd,$requetecapt)){}
+	mysqli_query($id_bd,$requetevaleur);
+}
+
 ?>

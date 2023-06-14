@@ -1,6 +1,6 @@
 #!/opt/lampp/bin/php
 <?php
-    $temp=shell_exec('mosquitto_sub -h 192.168.102.209 -t iut/# -C 1');
+    $temp=5;
     echo $temp;
     $id_bd=mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
     $requete="INSERT INTO `Mesure` (`Valeur`, `CodeCapt`) VALUES ($temp,1)";
