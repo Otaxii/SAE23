@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Ven 02 Juin 2023 à 18:09
+-- Généré le :  Mer 14 Juin 2023 à 10:32
 -- Version du serveur :  5.6.20
 -- Version de PHP :  5.5.15
 
@@ -27,9 +27,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `Administration` (
-  `Login` int(30) NOT NULL,
-  `MDP` int(30) NOT NULL
+  `Login` varchar(30) NOT NULL,
+  `MDP` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `Administration`
+--
+
+INSERT INTO `Administration` (`Login`, `MDP`) VALUES
+('Admin', 'passroot');
 
 -- --------------------------------------------------------
 
@@ -49,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `Batiment` (
 --
 
 INSERT INTO `Batiment` (`CodeBat`, `Nom`, `Login`, `MDP`) VALUES
-(0, 'GIM', 'test', 'test');
+(1, 'RT', 'Admin', 'Passroot');
 
 -- --------------------------------------------------------
 
@@ -59,7 +66,7 @@ INSERT INTO `Batiment` (`CodeBat`, `Nom`, `Login`, `MDP`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Capteur` (
   `CodeCapt` int(30) NOT NULL,
-  `Nom` varchar(20) NOT NULL,
+  `Salle` varchar(20) NOT NULL,
   `Type` varchar(20) NOT NULL,
   `CodeBat` int(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -68,8 +75,8 @@ CREATE TABLE IF NOT EXISTS `Capteur` (
 -- Contenu de la table `Capteur`
 --
 
-INSERT INTO `Capteur` (`CodeCapt`, `Nom`, `Type`, `CodeBat`) VALUES
-(1, 'TEst', 'Temp', 0);
+INSERT INTO `Capteur` (`CodeCapt`, `Salle`, `Type`, `CodeBat`) VALUES
+(1, 'E201', 'Température', 1);
 
 -- --------------------------------------------------------
 
@@ -79,22 +86,19 @@ INSERT INTO `Capteur` (`CodeCapt`, `Nom`, `Type`, `CodeBat`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Mesure` (
 `CodeMes` int(30) NOT NULL,
-  `Date` date DEFAULT NULL,
-  `Horaire` time(6) DEFAULT NULL,
+  `Date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `Horaire` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `Valeur` float NOT NULL,
   `CodeCapt` int(30) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Contenu de la table `Mesure`
 --
 
 INSERT INTO `Mesure` (`CodeMes`, `Date`, `Horaire`, `Valeur`, `CodeCapt`) VALUES
-(1, '0000-00-00', '00:00:00.000000', 24, 1),
-(2, '0000-00-00', '00:00:00.000000', 21, 1),
-(3, NULL, NULL, 23, 1),
-(4, NULL, NULL, 56, 1),
-(5, NULL, NULL, 24, 1);
+(13, '2023-06-11 00:00:00', '2023-06-11 16:15:50', 5, 1),
+(14, '2023-06-11 00:00:00', '2023-06-11 16:29:06', 5, 1);
 
 --
 -- Index pour les tables exportées
@@ -126,7 +130,7 @@ ALTER TABLE `Mesure`
 -- AUTO_INCREMENT pour la table `Mesure`
 --
 ALTER TABLE `Mesure`
-MODIFY `CodeMes` int(30) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `CodeMes` int(30) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- Contraintes pour les tables exportées
 --
