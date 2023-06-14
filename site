@@ -1,0 +1,7 @@
+#!/bin/bash
+systemctl stop apache2;
+/opt/lampp/lampp start;
+/home/ndupont/Documents/Travail_SAE_23/MQTT/B201.php
+/home/ndupont/Documents/Travail_SAE_23/MQTT/B203.php
+/home/ndupont/Documents/Travail_SAE_23/MQTT/E102.php
+/home/ndupont/Documents/Travail_SAE_23/MQTT/E106.php
