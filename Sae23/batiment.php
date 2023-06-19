@@ -1,22 +1,22 @@
 <?php
-
+// recover login and password 
 if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Connexion à la base de données
+   
     $conn = mysqli_connect("localhost", "DUPONT", "22209481", "sae23");
 
-    // Vérification de la connexion à la base de données
+    
     if (!$conn) {
         die("Échec de la connexion à la base de données : " . mysqli_connect_error());
     }
 
-    // Préparation de la requête SQL pour vérifier les informations de connexion
+    // Verify login information
     $query = "SELECT * FROM Batiment WHERE Login = '$username' AND MDP= '$password'";
     $result = mysqli_query($conn, $query);
 
-    // Vérification des résultats de la requête
+    // Check query results
     if (mysqli_num_rows($result) == 1) {
         // Nom d'utilisateur et mot de passe corrects
         $_SESSION['username'] = $username;
@@ -24,7 +24,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     }
 }
 ?>
-
+// Check that the user has logged in first, to avoid accessing the page without logging in. 
 <?php
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -53,11 +53,13 @@ else{
 <?php
     
 			if (isset($_POST['username']) && isset($_POST['password'])) {
-            // Connexion à la base de données
+          
             $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 			$username = $_POST['username'];
    			$password = $_POST['password'];
-
+				
+	// Depending on the user, either the rt building is displayed or the gim building.
+				
             if ($username == "batrt") {
 
 				echo "<h3>Bâtiment RT</h3>";
@@ -69,12 +71,12 @@ else{
                 echo "<th>Température</th>";
             	echo "</tr>";
 
-                // Récupérer toutes les mesures avec la salle correspondante
+                // Retrieve all measurements with the corresponding room
                 $query_all_measures = "SELECT Mesure.*, Capteur.Salle FROM Mesure JOIN Capteur ON Mesure.CodeCapt = Capteur.CodeCapt WHERE Capteur.CodeBat = 1";
                 $result_all_measures = mysqli_query($db, $query_all_measures);
 
                 while ($measure = mysqli_fetch_assoc($result_all_measures)) {
-                    // Afficher chaque mesure avec la salle correspondante
+                    // Display each measurement with the corresponding room
                     echo "<tr>";
                     echo "<td>" . $measure['Salle'] . "</td>";
                     echo "<td>" . $measure['Valeur'] . "</td>";
@@ -83,7 +85,7 @@ else{
 
                 echo "</tbody></table>";
                 echo "<table><tbody>";
-
+	 	// Calculates the average, max and min values of a room
                 $query_measures = "SELECT Capteur.Salle, Mesure.Valeur, MAX(Mesure.Valeur) AS ValeurMax, MIN(Mesure.Valeur) AS ValeurMin, AVG(Mesure.Valeur) AS Moyenne FROM Mesure JOIN Capteur ON Mesure.CodeCapt = Capteur.CodeCapt WHERE Capteur.CodeBat = 1 GROUP BY Capteur.CodeCapt";
                 $result_measures = mysqli_query($db, $query_measures);
 
@@ -96,7 +98,7 @@ else{
                 echo "</tr>";
 
                 while ($measure = mysqli_fetch_assoc($result_measures)) {
-                    // Afficher chaque mesure avec la salle, la valeur maximale, la valeur minimale et la moyenne correspondantes
+                    // Display each measurement with the corresponding room, maximum value, minimum value and average.Calculates the average, max and min values of a room
                     echo "<tr>";
                     echo "<td>" . $measure['Salle'] . "</td>";
                     echo "<td>" . $measure['ValeurMax'] . "</td>";
@@ -107,7 +109,7 @@ else{
 
                 echo "</tbody></table>";
 
-                // Fermer la connexion à la base de données
+             
                 mysqli_close($db);
             } elseif ($username == "batgim") {
 
@@ -119,12 +121,12 @@ else{
                 echo "<th>Salle</th>";
                 echo "<th>Température</th>";
             	echo "</tr>";
-                // Récupérer toutes les mesures avec la salle correspondante
+                // Retrieve all measurements with the corresponding room
                 $query_all_measures = "SELECT Mesure.*, Capteur.Salle FROM Mesure JOIN Capteur ON Mesure.CodeCapt = Capteur.CodeCapt WHERE Capteur.CodeBat = 2";
                 $result_all_measures = mysqli_query($db, $query_all_measures);
 
                 while ($measure = mysqli_fetch_assoc($result_all_measures)) {
-                    // Afficher chaque mesure avec la salle correspondante
+                    // Display each measurement with the corresponding room
                     echo "<tr>";
                     echo "<td>" . $measure['Salle'] . "</td>";
                     echo "<td>" . $measure['Valeur'] . "</td>";
@@ -133,7 +135,7 @@ else{
 
                 echo "</tbody></table>";
                 echo "<table><tbody>";
-
+		// Display each measurement with the corresponding room, maximum value, minimum value and average.Calculates the average, max and min values of a room
                 $query_measures = "SELECT Capteur.Salle, Mesure.Valeur, MAX(Mesure.Valeur) AS ValeurMax, MIN(Mesure.Valeur) AS ValeurMin, AVG(Mesure.Valeur) AS Moyenne FROM Mesure JOIN Capteur ON Mesure.CodeCapt = Capteur.CodeCapt WHERE Capteur.CodeBat = 2 GROUP BY Capteur.CodeCapt";
                 $result_measures = mysqli_query($db, $query_measures);
 
@@ -146,7 +148,7 @@ else{
                 echo "</tr>";
 
                 while ($measure = mysqli_fetch_assoc($result_measures)) {
-                    // Afficher chaque mesure avec la salle, la valeur maximale, la valeur minimale et la moyenne correspondantes
+                    // Display each measurement with the corresponding room, maximum value, minimum value and average.
                     echo "<tr>";
                     echo "<td>" . $measure['Salle'] . "</td>";
                     echo "<td>" . $measure['ValeurMax'] . "</td>";
@@ -157,7 +159,7 @@ else{
 
                 echo "</tbody></table>";
 
-                // Fermer la connexion à la base de données
+                
                 mysqli_close($db);
             }
 }
