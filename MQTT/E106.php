@@ -1,7 +1,5 @@
 #!/opt/lampp/bin/php
 <?php
-	while (true) //infinite loop
-{
    	shell_exec('mosquitto_sub -h mqtt.iut-blagnac.fr -t Student/by-room/E106/data -C 1 | jq ".[0].temperature, .[1].deviceName, .[1].devEUI, .[1].room, .[1].Building" > /home/ndupont/Desktop/stockage_donnees/E106.txt');
        $id_bd=mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible'); //connexion to the database
 	
@@ -27,5 +25,4 @@
 	if (mysqli_query($id_bd,$requetebat)){}
 	if (mysqli_query($id_bd,$requetecapt)){}
 	mysqli_query($id_bd,$requetevaleur);
-}
 ?>

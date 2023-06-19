@@ -1,6 +1,9 @@
 #!/opt/lampp/bin/php
 <?php
+<<<<<<< HEAD
 while (true){
+=======
+>>>>>>> c4b95e94e14107d3a79f5696235b2aaf85159c26
 	//data recovery via MQTT broker and storage in a file
    	shell_exec('mosquitto_sub -h mqtt.iut-blagnac.fr -t Student/by-room/B201/data -C 1 | jq ".[0].temperature, .[1].deviceName, .[1].devEUI, .[1].room, .[1].Building" > /home/ndupont/Desktop/stockage_donnees/B201.txt');
     $id_bd=mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');  //connection to the database
@@ -24,5 +27,4 @@ while (true){
 	if (mysqli_query($id_bd,$requetebat)){}
 	if (mysqli_query($id_bd,$requetecapt)){}
 	mysqli_query($id_bd,$requetevaleur);
-}
 ?>
