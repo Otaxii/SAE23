@@ -1,8 +1,8 @@
  <?php
 session_start();
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {          
 }
-else{
+else{											// Check if the administrator is logged in to avoid accessing the page without logging in.
 	header('Location: login.php');
 }
 ?>
@@ -33,13 +33,13 @@ else{
             // Connexion à la base de données
           $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
-            // Récupération de toutes les salles
+           
             $query_salles = "SELECT DISTINCT Salle FROM Capteur";
             $result_salles = mysqli_query($db, $query_salles);
-
-            // Affichage des options du menu déroulant
+													
+          
             while ($salle = mysqli_fetch_assoc($result_salles)) {
-                echo "<option value='" . $salle['Salle'] . "'>" . $salle['Salle'] . "</option>";
+                echo "<option value='" . $salle['Salle'] . "'>" . $salle['Salle'] . "</option>"; 		//It connects to the database and retrieves the room to see which ones can be deleted from a drop-down menu. 
             }
 
             // Fermeture de la connexion à la base de données
@@ -51,27 +51,26 @@ else{
     </form>
 
 <?php
-    // Vérification si le formulaire a été soumis
+
     if (isset($_POST['submit'])) {
-        // Récupération de la salle sélectionnée dans le menu déroulant
-        $salle = $_POST['salle'];
+   
+        $salle = $_POST['salle'];						
 		echo $salle;
 
-        // Connexion à la base de données
         $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
-        // Suppression du capteur en fonction de la salle sélectionnée
+        // Sensor deletion according to room selected
 		$query_suppression = "DELETE FROM Capteur WHERE Salle = '$salle'";
         mysqli_query($db,$query_suppression) or die ("Il ne veux pas supprimé le Capteur");
 
-        // Vérification si la suppression a réussi
+        // Check if deletion was successful
         if (mysqli_affected_rows($db) > 0) {
             echo "<p>Le capteur de la salle '" . $salle . "' a été supprimé avec succès.</p>";
         } else {
             echo "<p>La suppression du capteur a échoué. Veuillez réessayer.</p>";
         }
 
-        // Fermeture de la connexion à la base de données
+
         mysqli_close($db);
     }
     ?>
@@ -96,7 +95,7 @@ else{
     </form>
 
     <?php
-    // Vérification si le formulaire a été soumis
+    // Check if the form has been submitted
     if (isset($_POST['submit'])) {
         // Récupération des valeurs du formulaire
         $salle = $_POST['salle'];
@@ -104,21 +103,20 @@ else{
         $type = $_POST['type'];
         $valeur = $_POST['CodeBat'];
 
-        // Connexion à la base de données
        $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
-        // Insertion du nouveau capteur
+        // Inserting the new sensor
         $query_insertion = "INSERT INTO Capteur (Salle, CodeCapt, Type, CodeBat) VALUES ('$salle', '$codecapt', '$type', $valeur)";
         mysqli_query($db, $query_insertion);
 
-        // Vérification si l'insertion a réussi
+        // Check if insertion was successful
         if (mysqli_affected_rows($db) > 0) {
             echo "<p>Le capteur a été ajouté avec succès.</p>";
         } else {
             echo "<p>L'ajout du capteur a échoué. Veuillez réessayer.</p>";
         }
 
-        // Fermeture de la connexion à la base de données
+        
         mysqli_close($db);
     }
     ?>
