@@ -8,7 +8,7 @@
  <div id="container">
  <!-- zone de connexion -->
  
- <form action="verification_gestion.php" method="POST">
+ <form action="batiment.php" method="POST">
  <h1>Connexion</h1>
  
  <label><b>Nom d utilisateur</b></label>
@@ -21,6 +21,7 @@
 </br>
  <input type="submit" id='submit' value='LOGIN' >
  
+
  <?php
  if(isset($_GET['erreur'])){
  $err = $_GET['erreur'];

@@ -1,19 +1,10 @@
 #!/opt/lampp/bin/php
 <?php
-// Connexion à la base de données
-$id_bd=mysqli_connect("localhost", "BACQUIE", "passroot", "sae23");
-echo "salut" >> /home/hbacquie/Documents/test.txt;
+$salle='B201';
 
+$db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
-
-// Vérification de la connexion
-if (!$id_bd) {
-    die("Échec de la connexion à la base de données : " . mysqli_connect_error());
-} else {
-    echo "Connexion à la base de données réussie !";
-}
-
-// Fermer la connexion
-mysqli_close($id_bd);
+        // Suppression du capteur en fonction de la salle sélectionnée
+		$query_suppression = "DELETE FROM Capteur WHERE Salle = '$salle\n'";
+        mysqli_query($db,$query_suppression) or die ("Il ne veux pas supprimé le Capteur");
 ?>
-

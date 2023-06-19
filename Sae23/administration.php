@@ -1,4 +1,12 @@
-  <!DOCTYPE html>
+ <?php
+session_start();
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+}
+else{
+	header('Location: login.php');
+}
+?>
+ <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -23,7 +31,7 @@
         <select name="salle" id="salle">
             <?php
             // Connexion à la base de données
-          $db = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23") or die('Connexion impossible');
+          $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
             // Récupération de toutes les salles
             $query_salles = "SELECT DISTINCT Salle FROM Capteur";
@@ -47,18 +55,14 @@
     if (isset($_POST['submit'])) {
         // Récupération de la salle sélectionnée dans le menu déroulant
         $salle = $_POST['salle'];
+		echo $salle;
 
         // Connexion à la base de données
-        $db = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23") or die('Connexion impossible');
+        $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
         // Suppression du capteur en fonction de la salle sélectionnée
-		$query_mesure  = "SELECT CodeCapt FROM Capteur WHERE Salle= '$salle' ";
-		$result_measures = mysqli_query($db, $query_mesure);
-		$row = mysqli_fetch_assoc($result_measures);
-		$query_suppmesure = "DELETE FROM Mesure WHERE CodeCapt='{$row['CodeCapt']}'";
 		$query_suppression = "DELETE FROM Capteur WHERE Salle = '$salle'";
-		mysqli_query($db,$query_suppmesure);
-        mysqli_query($db,$query_suppression);
+        mysqli_query($db,$query_suppression) or die ("Il ne veux pas supprimé le Capteur");
 
         // Vérification si la suppression a réussi
         if (mysqli_affected_rows($db) > 0) {
@@ -101,7 +105,7 @@
         $valeur = $_POST['CodeBat'];
 
         // Connexion à la base de données
-       $db = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23") or die('Connexion impossible');
+       $db = mysqli_connect("localhost", "DUPONT", "22209481", "sae23") or die('Connexion impossible');
 
         // Insertion du nouveau capteur
         $query_insertion = "INSERT INTO Capteur (Salle, CodeCapt, Type, CodeBat) VALUES ('$salle', '$codecapt', '$type', $valeur)";

@@ -7,7 +7,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Connexion à la base de données
-    $conn = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23");
+    $conn = mysqli_connect("localhost", "DUPONT", "22209481", "sae23");
 
     // Vérification de la connexion à la base de données
     if (!$conn) {
@@ -15,7 +15,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     }
 
     // Préparation de la requête SQL pour vérifier les informations de connexion
-    $query = "SELECT * FROM Administration WHERE login = '$username' AND MDP= '$password'";
+    $query = "SELECT * FROM Administration WHERE Login = '$username' AND MDP= '$password'";
     $result = mysqli_query($conn, $query);
 
 
@@ -24,8 +24,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         // Nom d'utilisateur et mot de passe corrects
         $_SESSION['username'] = $username;
 
-        if ($username == "admin") {
+        if ($username == "Admin") {
             header('Location: administration.php');
+			$_SESSION['logged_in'] = true;
         } else {
             // Utilisateur inconnu
             header('Location: login.php?erreur=1');

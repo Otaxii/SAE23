@@ -7,7 +7,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Connexion à la base de données
-    $conn = mysqli_connect("localhost", "BACQUIE", "passroot", "sae23");
+    $conn = mysqli_connect("localhost", "DUPONT", "22209481", "sae23");
 
     // Vérification de la connexion à la base de données
     if (!$conn) {
@@ -23,15 +23,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     if (mysqli_num_rows($result) == 1) {
         // Nom d'utilisateur et mot de passe corrects
         $_SESSION['username'] = $username;
-
-        if ($username == "batrt") {
-            header('Location: batimentRT.php');
-        } elseif ($username == "batgim") {
-            header('Location: batimentGIM.php');
-        } else {
-            // Utilisateur inconnu
-            header('Location: login.php?erreur=1');
-        }
+        header('Location: batiment.php');
 
       exit();
     }
