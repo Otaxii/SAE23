@@ -6,7 +6,8 @@
  </head>
  <body>
  <div id="container">
- <!-- zone de connexion -->
+
+ Login page to enter username and password and link to batiment.php page
  
  <form action="batiment.php" method="POST">
  <h1>Connexion</h1>
@@ -21,7 +22,7 @@
 </br>
  <input type="submit" id='submit' value='LOGIN' >
  
-
+//Check if user or password is correct
  <?php
  if(isset($_GET['erreur'])){
  $err = $_GET['erreur'];
